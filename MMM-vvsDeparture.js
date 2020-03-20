@@ -105,10 +105,19 @@ Module.register("MMM-vvsDeparture", {
 
 			// Delay
 			var delayWrapper = document.createElement("td");
+			let delay = null;
 			if("isRealtimeControlled" in currentValue && currentValue.isRealtimeControlled == true){
-				var delay = this.calculateDelay(currentValue.departureTimePlanned, currentValue.departureTimeEstimated);
+				delay = this.calculateDelay(currentValue.departureTimePlanned, currentValue.departureTimeEstimated);
 			}
-			if (delay.getMinutes() != 0) {
+			
+			if (delay == null || isNaN(delay.getMinutes())) {
+				delayWrapper.innerHTML = self.translate("CANCELED");
+				delayWrapper.className = "delay";
+				if (self.config.colorDelay) {
+					delayWrapper.className += " color";
+				}
+			} else if (delay.getMinutes() != 0) {
+				delayWrapper.innerHTML = "+" +delay.getMinutes();
 				delayWrapper.className = "delay";
 				if (self.config.colorDelay) {
 					delayWrapper.className += " color";
@@ -118,11 +127,6 @@ Module.register("MMM-vvsDeparture", {
 				if (self.config.colorNoDelay) {
 					delayWrapper.className += " color";
 				}
-			}
-			if(isNaN(delay.getMinutes())){
-				delayWrapper.innerHTML = self.translate("CANCELED");
-			} else {
-				delayWrapper.innerHTML = "+" +delay.getMinutes();
 			}
 			trWrapper.appendChild(delayWrapper);
 
