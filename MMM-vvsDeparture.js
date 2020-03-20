@@ -123,6 +123,7 @@ Module.register("MMM-vvsDeparture", {
 					delayWrapper.className += " color";
 				}
 			} else {
+				delayWrapper.innerHTML = "+0";
 				delayWrapper.className = "nodelay";
 				if (self.config.colorNoDelay) {
 					delayWrapper.className += " color";
