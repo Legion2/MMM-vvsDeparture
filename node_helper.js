@@ -55,7 +55,6 @@ module.exports = NodeHelper.create({
 			url += `&itdTimeMinute=` + d.getMinutes().toString();
 		}
 
-        process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 		request(url, function (error, response, body) {
 			if (!error && response.statusCode == 200) {
 				self.sendSocketNotification(moduleIdentifier+"_NEW_DEPARTURES", JSON.parse(body));
